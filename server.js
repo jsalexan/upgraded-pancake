@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const path = require('path')
@@ -7,11 +7,11 @@ const errorHandler = require('./middleware/errorHandler')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
+const connectDB = require('./config/dbConn')
+const mongoose = require('mongoose')
 const PORT = process.env.PORT || 3500
-const connectDB = require('./config/dbConn');
-const { default: mongoose } = require('mongoose');
 
-console.log(process.env.NODE_ENV);
+console.log(process.env.NODE_ENV)
 
 connectDB()
 
@@ -27,6 +27,7 @@ app.use('/', express.static(path.join(__dirname, 'public')))
 
 app.use('/', require('./routes/root'))
 app.use('/users', require('./routes/userRoutes'))
+app.use('/notes', require('./routes/noteRoutes'))
 
 app.all('*', (req, res) => {
     res.status(404)
